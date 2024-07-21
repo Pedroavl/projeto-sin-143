@@ -5,33 +5,33 @@
  */ 
 
 class Usuario {
-
-    public $conn;
+    private $conn;
+    private $table_name = "Usuario";
 
     public function __construct($db) {
         $this->conn = $db;
-    } 
+    }
 
-    public function create_user($post) {
-        $user_pass = $post['senha'];
+    public function read_user() {
+        $query = "SELECT * FROM " . $this->table_name;
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function create_user($data) {
+        $user_pass = $data['senha'];
 
         // Criptografando a senha
         $user_pass_hash = password_hash($user_pass, PASSWORD_DEFAULT);
 
-        $sql = "INSERT INTO Usuario (email, senha, nome) VALUES ('".$post['email']."', '".$user_pass_hash."', '".$post['nome']."')";
-
-        if ($this->conn->query($sql) === TRUE) {
+        $query = "INSERT INTO " . $this->table_name . " (email, senha, nome) VALUES (?, ?, ?)";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("sss", $data['email'], $user_pass_hash, $data['nome']);
+        if ($stmt->execute()) {
             return true;
         } else {
-            echo "ERRO: $sql<br>".$this->conn->error."<br>";
             return false;
         }
     }
-
-    public function read_user() {
-        $sql = "SELECT * FROM Usuario";
-        $result = $this->conn->query($sql);
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
-
 }

@@ -21,9 +21,9 @@ USE `EventControlDB` ;
 -- Table `EventControlDB`.`Usuario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `EventControlDB`.`Usuario` (
-  `id_usuario` INT NOT NULL,
+  `id_usuario` INT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(45) NOT NULL,
-  `senha` VARCHAR(45) NOT NULL,
+  `senha` VARCHAR(255) NOT NULL,
   `nome` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_usuario`))
 ENGINE = InnoDB;
