@@ -3,8 +3,8 @@
 // Informações de acesso ao banco de dados
 $host = "localhost";
 $dbname = "EventControlDB";
-$username = "root";
-$password = "26122001";
+$username = "your_username";
+$password = "your_pass";
 
 
 $conn = new mysqli($host, $username, $password, $dbname);
