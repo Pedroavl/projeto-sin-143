@@ -34,4 +34,31 @@ class Usuario {
             return false;
         }
     }
+
+    public function update_user($data) {
+        $user_pass = $data['senha'];
+
+        // Criptografando a senha
+        $user_pass_hash = password_hash($user_pass, PASSWORD_DEFAULT);
+
+        $query = "UPDATE " . $this->table_name . " SET email = ?, senha = ?, nome = ? WHERE id_usuario = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("sssi", $data['email'], $user_pass_hash, $data['nome'], $data['id_usuario']);
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function delete_user($id_usuario) {
+        $query = "DELETE FROM " . $this->table_name . " WHERE id_usuario = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $id_usuario);
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
