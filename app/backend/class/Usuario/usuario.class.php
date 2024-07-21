@@ -24,7 +24,7 @@ class Usuario {
 
         // Criptografando a senha
         $user_pass_hash = password_hash($user_pass, PASSWORD_DEFAULT);
-
+        // bind_params prepare evita sql_injection no backend https://www.w3schools.com/php/php_mysql_prepared_statements.asp
         $query = "INSERT INTO " . $this->table_name . " (email, senha, nome) VALUES (?, ?, ?)";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("sss", $data['email'], $user_pass_hash, $data['nome']);
