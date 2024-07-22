@@ -12,17 +12,14 @@ class Estudante {
         $this->conn = $db;
     }
 
-    // Método para verificar se um estudante já existe pela sua matricula
-    private function student_exists($matricula) {
-        $query = "SELECT matricula FROM " . $this->table_name . " WHERE matricula = ?";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("i", $matricula);
-        $stmt->execute();
-        $stmt->store_result();
-        return $stmt->num_rows > 0;
-    }
+   
 
     public function create_student($data) {
+        // Vê se um estudante existe na tabela de Estudante pela sua matricula
+        if($this->estudante_existe($data['matricula'])) {
+            return false; // Usuário não existe
+        }
+
         $query = "INSERT INTO " . $this->table_name . " (matricula, pontuacao, id_usuario) VALUES (?, ?, ?)";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("iii", $data['matricula'], $data['pontuacao'], $data['id_usuario']);
@@ -60,5 +57,15 @@ class Estudante {
         } else {
             return false;
         }
+    }
+
+    // Método para verificar se um estudante já existe pela sua matricula
+    private function estudante_existe($matricula) {
+        $query = "SELECT matricula FROM " . $this->table_name . " WHERE matricula = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $matricula);
+        $stmt->execute();
+        $stmt->store_result();
+        return $stmt->num_rows > 0;
     }
 }

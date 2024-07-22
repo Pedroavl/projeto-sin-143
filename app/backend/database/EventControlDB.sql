@@ -51,7 +51,7 @@ ENGINE = InnoDB;
 -- Table `EventControlDB`.`Administrador`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `EventControlDB`.`Administrador` (
-  `id_administrador` INT NOT NULL,
+  `id_administrador` INT NOT NULL AUTO_INCREMENT,
   `id_usuario` INT NOT NULL,
   PRIMARY KEY (`id_administrador`),
   INDEX `fk_Administrador_Usuario1_idx` (`id_usuario` ASC) VISIBLE,
