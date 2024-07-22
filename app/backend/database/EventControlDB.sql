@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `EventControlDB`.`Usuario` (
   `email` VARCHAR(45) NOT NULL,
   `senha` VARCHAR(255) NOT NULL,
   `nome` VARCHAR(45) NOT NULL,
+  `role_id` INT NOT NULL,
   PRIMARY KEY (`id_usuario`))
 ENGINE = InnoDB;
 
