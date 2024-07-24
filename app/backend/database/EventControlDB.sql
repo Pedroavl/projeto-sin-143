@@ -67,7 +67,7 @@ ENGINE = InnoDB;
 -- Table `EventControlDB`.`Curso`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `EventControlDB`.`Curso` (
-  `idCurso` INT NOT NULL,
+  `idCurso` INT NOT NULL AUTO_INCREMENT,
   `titulo` VARCHAR(45) NOT NULL,
   `descricao` TEXT NOT NULL,
   `data_criacao` DATE NOT NULL,
@@ -86,7 +86,7 @@ ENGINE = InnoDB;
 -- Table `EventControlDB`.`Evento`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `EventControlDB`.`Evento` (
-  `id_evento` INT NOT NULL,
+  `id_evento` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NOT NULL,
   `descricao` TEXT NOT NULL,
   `quantidade_cursos` INT NOT NULL,
