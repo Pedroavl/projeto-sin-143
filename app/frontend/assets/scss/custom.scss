@@ -1,0 +1,61 @@
+@import "../../../../node_modules/bootstrap/scss/bootstrap";
+
+$primary: #791d1f;
+$secondary: #411718;
+$success: #43a71f;
+$light: #ffffff;
+$gray: #f4f4f4;
+$input: #dddddd;
+$inputText: #4e4e4e;
+
+$theme-colors: (
+    "primary": $primary,
+    "secondary": $secondary,
+    "success": $success,
+    "light": $light,
+    "gray": $gray,
+    "input": $input,
+    "inputText": $inputText
+);
+
+.back-primary {
+    background-color: $primary !important;
+}
+
+.back-secondary {
+    background-color: $secondary !important;
+}
+
+.back-input {
+    background-color: $input !important;
+}
+
+.back-gray {
+    background-color: $gray !important;
+}
+
+.text-primary {
+    color: $light !important;
+}
+
+.text-input {
+    color: $inputText !important;
+}
+
+.w-40 {
+    width: 40%;
+}
+
+h1, .h1 {
+    font-size: calc(1.475rem + 1.5vw);
+    font-family:'Roboto';
+}
+@media (min-width: 1200px) {
+    h1, .h1 {
+        font-size: 3.8rem;
+    }
+}
+
+html {
+    font-family: 'Roboto';
+}

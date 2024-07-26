@@ -1,0 +1,37 @@
+//Modelo de import
+//<div id="header" data-img-path="../images/logo-ufv.png" data-img-alt="Logo UFV" data-first-link="https://www.youtube.com/" data-first-text="Sair" data-second-link="#" data-second-text="Phelipe Romano"></div>
+
+fetch('../../components/header.html').
+    then(res => res.text())
+    .then(data => {
+
+        const component = document.getElementById('header');
+        
+        const imgPath  = component.getAttribute('data-img-path');
+        const imgAlt  = component.getAttribute('data-img-alt');
+
+        const firstLink  = component.getAttribute('data-first-link');
+        const firstText  = component.getAttribute('data-first-text');
+
+        const secondLink  = component.getAttribute('data-second-link');
+        const secondText  = component.getAttribute('data-second-text');
+
+        const parser = new DOMParser();
+        const header = parser.parseFromString(data, 'text/html');
+
+        const image = header.getElementById('logo-ufv');
+        image.src = imgPath;
+        image.alt = imgAlt;
+
+        const firstNav = header.getElementById('firstNav');
+        firstNav.innerText = firstText;
+        firstNav.href = firstLink;
+
+        const secondNav = header.getElementById('secondNav');
+        secondNav.innerText = secondText;
+        secondNav.href = secondLink;
+
+        component.innerHTML = header.body.innerHTML;
+        
+});
+
