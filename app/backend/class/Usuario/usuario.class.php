@@ -19,6 +19,14 @@ class Usuario {
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function read_user_by_email($email) {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE email = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
+
     public function create_user($data) {
         $user_pass = $data['senha'];
         $role_id = 1;

@@ -14,21 +14,29 @@
 
 <div class="justify-content-center align-items-center">
     <main class="form-signin w-50 m-auto" style="min-width: 700px;">
-        <form class="text-center w-75 m-auto p-5" id="loginForm">
-            <img class="mb-3 img-fluid w-40 mt-5" src="../images/logo-ufv2.png" alt="">
+        <form class="text-center w-75 m-auto p-5 pb-1" action="../php/login.php" method="POST" id="registerForm">
+            <img class="mb-1 img-fluid w-40 mt-3" src="../images/logo-ufv2.png" alt="">
     
             <div class="back-gray p-4 m-5 border rounded">
                 <div class="form-floating">
-                    <input type="text" class="form-control back-input rounded mb-2" id="emailMat" placeholder="name@example.com">
-                    <label for="floatingInput" class="text-input">Email/Matrícula</label>
+                    <input type="text" name="nome" class="form-control back-input rounded mb-2" id="name" placeholder="Fulano da Silva">
+                    <label for="floatingInput" class="text-input">Nome</label>
                 </div>
                 <div class="form-floating">
-                    <input type="password" class="form-control back-input rounded" id="password" placeholder="Senha">
+                    <input type="email" name="email" class="form-control back-input rounded mb-2" id="email" placeholder="name@example.com">
+                    <label for="floatingInput" class="text-input">Email</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" name="matricula" class="form-control back-input rounded mb-2" id="matricula" placeholder="9287" pattern="\d*" title="Insira apenas números">
+                    <label for="floatingInput" class="text-input">Matrícula</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" name="senha" class="form-control back-input rounded" id="password" placeholder="Senha">
                     <label for="floatingPassword" class="text-input">Senha</label>
                 </div>
-                <button class="btn back-primary w-100 py-2 mt-5 text-light" type="submit">Entrar</button>
+                <button class="btn back-primary w-100 py-2 mt-5 text-light" type="submit" name="submit" value="register">Cadastrar</button>
             </div>
-            <p class="mt-3 mb-3 text-body-secondary">Ainda não tem uma conta? <a href="register.html" class="text-">Criar Conta</a></p>
+            <p class="mt-3 text-body-secondary">Já tem uma conta? <a href="login.html" class="">Faça Login</a></p>
         </form>
     </main>
 </div>
