@@ -14,21 +14,21 @@
 
 <div class="justify-content-center align-items-center">
     <main class="form-signin w-50 m-auto" style="min-width: 700px;">
-        <form class="text-center w-75 m-auto p-5" id="loginForm">
+        <form class="text-center w-75 m-auto p-5" id="loginForm" action="../php/login.php" method="POST">
             <img class="mb-3 img-fluid w-40 mt-5" src="../images/logo-ufv2.png" alt="">
     
             <div class="back-gray p-4 m-5 border rounded">
                 <div class="form-floating">
-                    <input type="text" class="form-control back-input rounded mb-2" id="emailMat" placeholder="name@example.com">
+                    <input type="text" name="email" class="form-control back-input rounded mb-2" id="emailMat" placeholder="name@example.com">
                     <label for="floatingInput" class="text-input">Email/Matrícula</label>
                 </div>
                 <div class="form-floating">
-                    <input type="password" class="form-control back-input rounded" id="password" placeholder="Senha">
+                    <input type="password" name="senha" class="form-control back-input rounded" id="password" placeholder="Senha">
                     <label for="floatingPassword" class="text-input">Senha</label>
                 </div>
-                <button class="btn back-primary w-100 py-2 mt-5 text-light" type="submit">Entrar</button>
+                <button class="btn back-primary w-100 py-2 mt-5 text-light" type="submit" name="submit" value="register">Entrar</button>
             </div>
-            <p class="mt-3 mb-3 text-body-secondary">Ainda não tem uma conta? <a href="register.html" class="text-">Criar Conta</a></p>
+            <p class="mt-3 mb-3 text-body-secondary">Ainda não tem uma conta? <a href="register.html">Criar Conta</a></p>
         </form>
     </main>
 </div>
