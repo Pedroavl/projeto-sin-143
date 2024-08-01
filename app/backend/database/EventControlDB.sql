@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `EventControlDB`.`Evento` (
   `local` VARCHAR(45) NOT NULL,
   `data_criacao` DATE NOT NULL,
   `id_administrador` INT NOT NULL,
-  `imagem` BLOB NULL,
+  `imagem` LONGBLOB NOT NULL,
   PRIMARY KEY (`id_evento`),
   INDEX `fk_Evento_Administrador1_idx` (`id_administrador` ASC) VISIBLE,
   CONSTRAINT `fk_Evento_Administrador1`
@@ -110,7 +110,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `EventControlDB`.`Cursos Evento`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `EventControlDB`.`Cursos Evento` (
+CREATE TABLE IF NOT EXISTS `EventControlDB`.`Cursos_Evento` (
   `id_evento` INT NOT NULL,
   `id_curso` INT NOT NULL,
   `quantidade_vagas` INT NOT NULL,
@@ -145,7 +145,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `EventControlDB`.`Estudante Cursos Evento`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `EventControlDB`.`Estudante Cursos Evento` (
+CREATE TABLE IF NOT EXISTS `EventControlDB`.`Estudante_Cursos_Evento` (
   `matricula` INT NOT NULL,
   `id_evento` INT NOT NULL,
   `id_curso` INT NOT NULL,
