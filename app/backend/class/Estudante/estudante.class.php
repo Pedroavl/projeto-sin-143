@@ -12,7 +12,6 @@ class Estudante {
         $this->conn = $db;
     }
 
-   
 
     public function create_student($data) {
         // Vê se um estudante existe na tabela de Estudante pela sua matricula
@@ -60,7 +59,7 @@ class Estudante {
     }
 
     // Método para verificar se um estudante já existe pela sua matricula
-    private function estudante_existe($matricula) {
+    public function estudante_existe($matricula) {
         $query = "SELECT matricula FROM " . $this->table_name . " WHERE matricula = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("i", $matricula);

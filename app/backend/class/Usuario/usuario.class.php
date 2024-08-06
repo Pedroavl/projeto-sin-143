@@ -75,4 +75,24 @@ class Usuario {
             return false;
         }
     }
+
+    public function is_administrador($id_usuario) {
+        $query = "SELECT u.id_usuario FROM " . $this->table_name . " u JOIN Administrador a ON u.id_usuario = a.id_usuario WHERE u.id_usuario = ? and u.role_id = 0";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $id_usuario);
+        $stmt->execute();
+        $stmt->store_result();
+
+        return $stmt->num_rows > 0;
+    }
+
+    public function is_estudante($id_usuario) {
+        $query = "SELECT role_id FROM " . $this->table_name . " WHERE id_usuario = ? AND role_id = 1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $id_usuario);
+        $stmt->execute();
+        $stmt->store_result();
+
+        return $stmt->num_rows > 0;
+    }
 }
