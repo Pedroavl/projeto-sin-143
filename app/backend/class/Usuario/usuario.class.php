@@ -95,4 +95,8 @@ class Usuario {
 
         return $stmt->num_rows > 0;
     }
+
+    public function is_logged() {
+        return isset($_SESSION['id_usuario']);
+    }
 }
