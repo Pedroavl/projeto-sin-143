@@ -97,6 +97,7 @@ class Usuario {
     }
 
     public function is_logged() {
+        session_start();
         return isset($_SESSION['id_usuario']);
     }
 }
