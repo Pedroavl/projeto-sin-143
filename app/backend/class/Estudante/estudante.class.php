@@ -12,6 +12,7 @@ class Estudante {
         $this->conn = $db;
     }
 
+   
 
     public function create_student($data) {
         // Vê se um estudante existe na tabela de Estudante pela sua matricula
@@ -66,5 +67,35 @@ class Estudante {
         $stmt->execute();
         $stmt->store_result();
         return $stmt->num_rows > 0;
+    }
+
+    public function ranking_estudantes($matricula) {
+        // Query para obter a classificação e a pontuação de um estudante específico
+        $query = "
+            SELECT classificacao, matricula, pontuacao
+            FROM (
+                SELECT 
+                    @rank := IF(@prev_pontuacao = E.pontuacao, @rank, @rank + 1) AS classificacao,
+                    E.matricula, 
+                    E.pontuacao,
+                    @prev_pontuacao := E.pontuacao
+                FROM 
+                    " . $this->table_name . " AS E
+                    CROSS JOIN (SELECT @rank := 0, @prev_pontuacao := NULL) AS vars
+                ORDER BY 
+                    E.pontuacao DESC
+            ) AS ranking
+            WHERE matricula = ?";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $matricula);
+        $stmt->execute();
+        $res = $stmt->get_result();
+
+        if ($res->num_rows > 0) {
+            return $res->fetch_assoc();
+        } else {
+            return null;
+        }
     }
 }
