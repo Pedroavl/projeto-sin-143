@@ -12,7 +12,7 @@ class EstudanteCursosEvento {
     }
 
     public function create_estudante_curso_evento($data) {
-        $pontuacao = 0;
+        $pontuacao = 10;
 
         $query = "INSERT INTO " . $this->table_name . " (matricula, id_evento, id_curso, pontuacao) VALUES (?, ?, ?, ?)";
 
