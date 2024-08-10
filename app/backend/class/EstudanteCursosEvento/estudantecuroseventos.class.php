@@ -12,12 +12,10 @@ class EstudanteCursosEvento {
     }
 
     public function create_estudante_curso_evento($data) {
-        $pontuacao = 10;
-
         $query = "INSERT INTO " . $this->table_name . " (matricula, id_evento, id_curso, pontuacao) VALUES (?, ?, ?, ?)";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("iiii", $data['matricula'], $data['id_evento'], $data['id_curso'], $pontuacao);
+        $stmt->bind_param("iiii", $data['matricula'], $data['id_evento'], $data['id_curso'], 10);
 
         if ($stmt->execute()) {
             return true;
