@@ -1,5 +1,6 @@
 @import "../../../../node_modules/bootstrap/scss/bootstrap.scss";
 
+
 $primary: #791d1f;
 $secondary: #411718;
 $success: #43a71f;
@@ -52,6 +53,24 @@ $theme-colors: (
 
 .font-lighter {
     font-weight: lighter;
+}
+
+.pagination .active .page-link {
+    background-color: #791d1f;
+    border-color: #791d1f;
+    color: white; /* Para garantir que o texto seja legível */
+}
+
+.pagination .page-link {
+    background-color: white;
+    border-color: #791d1f;
+    color: #791d1f; /* Para garantir que o texto seja legível */
+}
+
+.pagination .page-link:hover {
+    background-color: #5e1517; /* Cor mais escura para o hover */
+    border-color: #5e1517;
+    color: white;
 }
 
 h1, .h1 {

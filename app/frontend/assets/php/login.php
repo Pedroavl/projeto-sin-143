@@ -26,7 +26,7 @@
                 $_SESSION['id_usuario'] = $data['id_usuario'];
                 $_SESSION['email'] = $data['email'];  
                 echo $_SESSION['email'];
-                //header('Location: ../html/login.html');
+                header('Location: ../html/main-page.html');
             }else {
                 print_r('Dados Invalidos');
             }
