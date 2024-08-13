@@ -28,6 +28,8 @@
             echo $_SESSION['id_usuario'];
             echo $_SESSION['email'];
 
+            header("Location: ../html/login.html");
+
         }else {
             print_r('email já registrado');
         }

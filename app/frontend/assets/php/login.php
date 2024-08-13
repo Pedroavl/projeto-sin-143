@@ -48,7 +48,7 @@
                 $_SESSION['email'] = $_POST['emailMat'];  
                 echo $_SESSION['email'];
                 echo $_SESSION['id_usuario'];
-                //header('Location: ../html/login.html');
+                header('Location: ../html/main-page.html');
             }else {
                 print_r('Dados Invalidos');
             }

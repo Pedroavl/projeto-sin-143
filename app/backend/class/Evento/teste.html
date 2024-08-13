@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Evento</title>
+<body>
+    <div>
+        <h1>Criar Evento</h1>
+        <form action="process_create_evento.php" method="POST" enctype="multipart/form-data">
+            <div>
+                <label for="nome" >Nome do Evento</label>
+                <input type="text" name="nome" required>
+            </div>
+            <div>
+                <label for="descricao">Descrição</label>
+                <textarea name="descricao" rows="3" required></textarea>
+            </div>
+            <div>
+                <label for="quantidade_cursos">Quantidade de Cursos</label>
+            <input type="number" name="quantidade_cursos" required>
+            </div>
+            <div>
+                <label for="data_inicio">Data de Início</label>
+                <input type="date" name="data_inicio" required>
+            </div>
+            <div>
+                <label for="data_fim">Data de Fim</label>
+                <input type="date" name="data_fim" required>
+            </div>
+            <div>
+                <label for="local">Local</label>
+                <input type="text" name="local" required>
+            </div>
+            <div>
+                <label for="imagem_evento">Imagem do Evento</label>
+                <input type="file" name="imagem_evento">
+            </div>
+            <button type="submit" name="cadastrar_evento">Criar Evento</button>
+        </form>
+    </div>
+</body>
+</html>

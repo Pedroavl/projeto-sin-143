@@ -86,6 +86,7 @@ class Evento {
         $imagem_db = $destino.$novo_nome;
 
         $stmt->bind_param("ssisssssss", $data['nome'], $data['descricao'], $quantidade_cursos, $data['data_inicio'], $data['data_fim'], $data['encerrado'], $data['local'], $data_criacao, $data['id_administrador'], $imagem_db);
+        
         if ($stmt->execute()) {
             return true;
         } else {
