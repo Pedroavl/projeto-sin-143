@@ -11852,6 +11852,10 @@ textarea.form-control-lg {
   background-color: #411718 !important;
 }
 
+.back-success {
+  background-color: #43a71f !important;
+}
+
 .back-input {
   background-color: #dddddd !important;
 }

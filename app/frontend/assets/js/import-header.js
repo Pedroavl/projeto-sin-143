@@ -5,33 +5,38 @@ fetch('../../components/header.html').
     then(res => res.text())
     .then(data => {
 
-        const component = document.getElementById('header');
-        
-        const imgPath  = component.getAttribute('data-img-path');
-        const imgAlt  = component.getAttribute('data-img-alt');
+        fetch('../php/get-user-name.php').
+        then(res => res.text())
+        .then(name => {
 
-        const firstLink  = component.getAttribute('data-first-link');
-        const firstText  = component.getAttribute('data-first-text');
+            const component = document.getElementById('header');
+            
+            const imgPath  = component.getAttribute('data-img-path');
+            const imgAlt  = component.getAttribute('data-img-alt');
 
-        const secondLink  = component.getAttribute('data-second-link');
-        const secondText  = component.getAttribute('data-second-text');
+            const firstLink  = component.getAttribute('data-first-link');
+            const firstText  = component.getAttribute('data-first-text');
 
-        const parser = new DOMParser();
-        const header = parser.parseFromString(data, 'text/html');
+            const secondLink  = component.getAttribute('data-second-link');
 
-        const image = header.getElementById('logo-ufv');
-        image.src = imgPath;
-        image.alt = imgAlt;
+            const parser = new DOMParser();
+            const header = parser.parseFromString(data, 'text/html');
 
-        const firstNav = header.getElementById('firstNav');
-        firstNav.innerText = firstText;
-        firstNav.href = firstLink;
+            const image = header.getElementById('logo-ufv');
+            image.src = imgPath;
+            image.alt = imgAlt;
 
-        const secondNav = header.getElementById('secondNav');
-        secondNav.innerText = secondText;
-        secondNav.href = secondLink;
+            const firstNav = header.getElementById('firstNav');
+            firstNav.innerText = firstText;
+            firstNav.href = firstLink;
 
-        component.innerHTML = header.body.innerHTML;
-        
+            const secondNav = header.getElementById('secondNav');
+            secondNav.innerText = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+            secondNav.href = secondLink;
+
+
+
+            component.innerHTML = header.body.innerHTML;
+        });
 });
 

@@ -84,6 +84,7 @@ class Evento {
         }
 
         $imagem_db = $destino.$novo_nome;
+        
 
         $stmt->bind_param("ssisssssss", $data['nome'], $data['descricao'], $quantidade_cursos, $data['data_inicio'], $data['data_fim'], $data['encerrado'], $data['local'], $data_criacao, $data['id_administrador'], $imagem_db);
         
@@ -188,7 +189,8 @@ class Evento {
     }
 
     private function count_cursos() {
-        $query = "SELECT COUNT(*) as total FROM Curso";
+        $query = "SELECT COUNT(*) as total FROM Curso"; //alterar 
+        //SELECT COUNT(*) as total FROM cursos_evento WHERE id_evento = 67;
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result()->fetch_assoc();

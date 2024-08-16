@@ -1,23 +1,24 @@
 <?php
-    include "evento.class.php";
-    include "../../database/connection/connect.inc.php";
+    include "../../../backend/class/Evento/evento.class.php";
+    include "../../../backend/database/connection/connect.inc.php";
+
+    //começar sessão do adm
 
     $evento = new Evento($conn);
 
     if (isset($_POST['cadastrar_evento'])) {
         $data = [
-            'nome' => $_POST['nome'],
-            'descricao' => $_POST['descricao'],
-            'quantidade_cursos' => $_POST['quantidade_cursos'],
-            'data_inicio' => $_POST['data_inicio'],
-            'data_fim' => $_POST['data_fim'],
-            'local' => $_POST['local'],
+            'nome' => $_POST['title'],
+            'descricao' => $_POST['description'],
+            'quantidade_cursos' => 0,
+            'data_inicio' => $_POST['beginData'],
+            'data_fim' => $_POST['endData'],
+            'local' => $_POST['location'],
             'id_administrador' => 1,
             'encerrado' => '0',
             'imagem_evento' => ''
         ];
 
-        print_r($data);
         print_r($_FILES['imagem_evento']['full_path']);
 
         $evento->create_evento($data);

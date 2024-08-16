@@ -13,7 +13,7 @@
         // Se matricula
         if($student->estudante_existe($_POST['emailMat'])){
             // Consulta senha
-            $query = "SELECT U.senha, U.id_usuario, U.email FROM usuario as U JOIN estudante as E ON E.id_usuario = U.id_usuario WHERE E.matricula = ?";
+            $query = "SELECT U.senha, U.id_usuario, U.email, U.nome FROM usuario as U JOIN estudante as E ON E.id_usuario = U.id_usuario WHERE E.matricula = ?";
             $stmt = $conn->prepare($query);
             $stmt->bind_param("i", $_POST['emailMat']);
             $stmt->execute();
@@ -25,7 +25,10 @@
                 print_r($data);
                 $_SESSION['id_usuario'] = $data['id_usuario'];
                 $_SESSION['email'] = $data['email'];  
+                $_SESSION['nome'] = $data['nome'];
                 echo $_SESSION['email'];
+                echo $_SESSION['id_usuario'];
+                echo $_SESSION['nome'];
                 header('Location: ../html/main-page.html');
             }else {
                 print_r('Dados Invalidos');
@@ -45,9 +48,11 @@
             if($data && password_verify($_POST['senha'], $data['senha'])){
                 print_r($data);
                 $_SESSION['id_usuario'] = $data['id_usuario'];
-                $_SESSION['email'] = $_POST['emailMat'];  
+                $_SESSION['email'] = $_POST['emailMat'];
+                $_SESSION['nome'] = $data['nome'];
                 echo $_SESSION['email'];
                 echo $_SESSION['id_usuario'];
+                echo $_SESSION['nome'];
                 header('Location: ../html/main-page.html');
             }else {
                 print_r('Dados Invalidos');
