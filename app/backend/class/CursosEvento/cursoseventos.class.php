@@ -18,10 +18,12 @@ class CursosEvento {
             return false;
         }
 
-        $query = "INSERT INTO " . $this->table_name . " (id_evento, id_curso, quantidade_vagas, quantidade_inscritos, id_administrador, data, horario_inicio, horario_fim) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO " . $this->table_name . " (id_evento, id_curso, quantidade_vagas, quantidade_inscritos, id_administrador, data, horario_inicio, horario_fim, data_criacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        $data_criacao = date('Y-m-d');
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("iiiiisss", $data['id_evento'], $data['id_curso'], $data['quantidade_vagas'], $data['quantidade_inscritos'], $data['id_administrador'], $data['data'], $data['horario_inicio'], $data['horario_fim']);
+        $stmt->bind_param("iiiiissss", $data['id_evento'], $data['id_curso'], $data['quantidade_vagas'], $data['quantidade_inscritos'], $data['id_administrador'], $data['data'], $data['horario_inicio'], $data['horario_fim'], $data_criacao);
         if ($stmt->execute()) {
             return true;
         } else {
