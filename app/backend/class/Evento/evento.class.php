@@ -24,7 +24,7 @@ class Evento {
         $stmt = $this->conn->prepare($query);
 
         $data_criacao = date("Y-m-d");
-        $quantidade_cursos = $this->count_cursos();
+        $quantidade_cursos = $this->count_cursos($data['id_evento']);
 
         if(isset($_POST['cadastrar_evento'])) {
             // print_r($_FILES['imagem_evento']);
@@ -96,7 +96,7 @@ class Evento {
     }
 
     public function update_evento($data) {
-        $quantidade_cursos = $this->count_cursos();
+        $quantidade_cursos = $this->count_cursos($data['id_evento']);
 
         $imagem = !empty($FILES['imagem_evento']['name']) ? $FILES['imagem_evento']['name'] :   "";
 
@@ -188,10 +188,10 @@ class Evento {
         }
     }
 
-    private function count_cursos() {
-        $query = "SELECT COUNT(*) as total FROM Curso"; //alterar 
-        //SELECT COUNT(*) as total FROM cursos_evento WHERE id_evento = 67;
+    private function count_cursos($id_evento) {
+        $query = "SELECT COUNT(*) as total FROM cursos_evento WHERE id_evento = ?";
         $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $id_evento);
         $stmt->execute();
         $result = $stmt->get_result()->fetch_assoc();
         return $result['total'];
