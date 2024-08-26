@@ -12,13 +12,24 @@ class CursosEvento {
         $this->conn = $db;
     }
 
+    public function read_cursos_evento($id_evento) {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE id_evento = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $id_evento);
+        if ($stmt->execute()) {
+            return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        } else {
+            return false;
+        }
+    }
+
     public function create_curso_evento($data) {
         $query = "INSERT INTO " . $this->table_name . " (id_evento, id_curso, quantidade_vagas, quantidade_inscritos, id_administrador, data, horario_inicio, horario_fim, data_criacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $data_criacao = date('Y-m-d');
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("iiiiissss", $data['id_evento'], $data['id_curso'], $data['quantidade_vagas'], $data['quantidade_inscritos'], $data['id_administrador'], $data['data'], $data['horario_inicio'], $data['horario_fim'], $data_criacao);
+        $stmt->bind_param("sssiissss", $data['id_evento'], $data['id_curso'], $data['quantidade_vagas'], $data['quantidade_inscritos'], $data['id_administrador'], $data['data'], $data['horario_inicio'], $data['horario_fim'], $data_criacao);
         if ($stmt->execute()) {
             return true;
         } else {

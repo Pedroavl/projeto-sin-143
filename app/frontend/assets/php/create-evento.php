@@ -23,6 +23,8 @@
 
         $evento->create_evento($data);
 
+        header("Location: ../html/administrator/main-page-adm.html");
+
         /*if (isset($_FILES['imagem_evento']) && $_FILES['imagem_evento']['error'] == 0) {
             $nomeArquivo = $_FILES['imagem_evento']['name'];
             $tipoArquivo = $_FILES['imagem_evento']['type'];

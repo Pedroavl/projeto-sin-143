@@ -12,7 +12,7 @@ class Estudante {
         $this->conn = $db;
     }
 
-   
+
 
     public function create_student($data) {
         // Vê se um estudante existe na tabela de Estudante pela sua matricula
@@ -59,6 +59,17 @@ class Estudante {
         }
     }
 
+    public function delete_student_by_user_id($id_usuario) {
+        $query = "DELETE " . $this->table_name . " FROM " . $this->table_name . " JOIN Usuario AS U ON U.id_usuario = " . $this->table_name . ".id_usuario WHERE U.id_usuario = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $id_usuario);
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // Método para verificar se um estudante já existe pela sua matricula
     public function estudante_existe($matricula) {
         $query = "SELECT matricula FROM " . $this->table_name . " WHERE matricula = ?";
@@ -68,6 +79,21 @@ class Estudante {
         $stmt->store_result();
         return $stmt->num_rows > 0;
     }
+
+    public function get_student_by_user($id_usuario) {
+        $query = "SELECT matricula FROM " . $this->table_name . " JOIN Usuario AS U ON U.id_usuario = " . $this->table_name . ".id_usuario WHERE U.id_usuario = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $id_usuario);
+        $stmt->execute();
+        $res = $stmt->get_result();
+
+        if ($res->num_rows > 0) {
+            return $res->fetch_assoc();
+        } else {
+            return null;
+        }
+    }
+
 
     public function ranking_estudantes($matricula) {
         // Query para obter a classificação e a pontuação de um estudante específico

@@ -98,11 +98,12 @@ class Evento {
     public function update_evento($data) {
         $quantidade_cursos = $this->count_cursos($data['id_evento']);
 
-        $imagem = !empty($FILES['imagem_evento']['name']) ? $FILES['imagem_evento']['name'] :   "";
+        $imagem = !empty($_FILES['imagem_evento']['name']) ? $_FILES['imagem_evento']['name'] :   "";
+
 
         if(!empty($imagem)) {
             $caminho_img = "../../../frontend/assets/images/";
-            if(isset($_POST['cadastrar_evento'])) {
+            if(isset($_POST['editar_evento'])) {
                 // print_r($_FILES['imagem_evento']);
                 if(!empty($_FILES['imagem_evento']['name'])) {
                     $nome_imagem = $_FILES['imagem_evento']['name'];
@@ -138,7 +139,7 @@ class Evento {
                     if(!in_array($tipo, $tipos_permitidos)) {
                         $erros[] = "O tipo de arquivo não é permitido!<br />";
                     }
-    
+                
                     // Mostra os erros
                     if(!empty($erros)) {
                         foreach($erros as $erro) {
@@ -149,7 +150,9 @@ class Evento {
                         $data_atual = date("d-m-Y_h-i");
                         $destino = $caminho;
                         $novo_nome = '-'.$data_atual.'-'.$nome_imagem;
-    
+
+                        
+                        echo $imagem;
                         if(move_uploaded_file($nome_temporario, $destino.$novo_nome)) {
                             echo "Envio de arquivo feito com sucesso!<br />";
                         } else {
@@ -158,17 +161,20 @@ class Evento {
                     }
                 }
             }
-            // Verifica se a imagem não esta vazia
-            if(!empty($imagem)) {
-                $query = "UPDATE " . $this->table_name . " SET nome = ?, descricao = ?, quantidade_cursos = ?, data_inicio = ?, data_fim = ?, encerrado = ?, local = ?, id_administrador = ?, imagem = ? WHERE id_evento = ?";
-                $stmt = $this->conn->prepare($query);
-                $stmt->bind_param("ssissssisb", $data['nome'], $data['descricao'], $quantidade_cursos, $data['data_inicio'], $data['data_fim'], $data['encerrado'], $data['local'], $data['id_administrador'], $imagem, $data['id_evento']);
-            } else {
-                $query = "UPDATE " . $this->table_name . " SET nome = ?, descricao = ?, quantidade_cursos = ?, data_inicio = ?, data_fim = ?, encerrado = ?, local = ?, id_administrador = ? WHERE id_evento = ?";
-                $stmt = $this->conn->prepare($query);
-                $stmt->bind_param("ssissssii", $data['nome'], $data['descricao'], $quantidade_cursos, $data['data_inicio'], $data['data_fim'], $data['encerrado'], $data['local'], $data['id_administrador'], $data['id_evento']);
-            }
         }
+        // Verifica se a imagem não esta vazia
+        if(!empty($imagem)) {
+            $imagem_db = $destino.$novo_nome;
+            echo $imagem_db;
+            $query = "UPDATE " . $this->table_name . " SET nome = ?, descricao = ?, quantidade_cursos = ?, data_inicio = ?, data_fim = ?, encerrado = ?, local = ?, id_administrador = ?, imagem = ? WHERE id_evento = ?";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param("ssissssisi", $data['nome'], $data['descricao'], $quantidade_cursos, $data['data_inicio'], $data['data_fim'], $data['encerrado'], $data['local'], $data['id_administrador'], $imagem_db, $data['id_evento']);
+        } else {
+            $query = "UPDATE " . $this->table_name . " SET nome = ?, descricao = ?, quantidade_cursos = ?, data_inicio = ?, data_fim = ?, encerrado = ?, local = ?, id_administrador = ? WHERE id_evento = ?";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param("ssissssii", $data['nome'], $data['descricao'], $quantidade_cursos, $data['data_inicio'], $data['data_fim'], $data['encerrado'], $data['local'], $data['id_administrador'], $data['id_evento']);
+        }
+        
 
         if ($stmt->execute()) {
             return true;

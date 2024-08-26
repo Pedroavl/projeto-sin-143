@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentPage = 1;
     let totalPages;
 
-    fetch('../php/teste2.php')
+    fetch('../php/eventos.php')
         .then(res => res.json())
         .then(data => {
             const eventos = data;
@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     const imgEvento = document.createElement('img');
                     imgEvento.src = evento['imagem'];
                     imgEvento.alt = evento['descricao'];
+                    imgEvento.style.width = '100%';
+                    imgEvento.style.height = '165px';
+                    imgEvento.style.objectFit = 'cover';
                     imgEvento.className = 'img-fluid max-width';
 
                     // Criar o p

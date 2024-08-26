@@ -11,6 +11,5 @@ fetch('../../../components/sidebar.html').
         const sidebar = parser.parseFromString(data, 'text/html');
 
         component.innerHTML = sidebar.body.innerHTML;
-        
 });
 

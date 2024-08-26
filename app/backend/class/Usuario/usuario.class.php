@@ -29,9 +29,10 @@ class Usuario {
 
     public function create_user($data) {
         $user_pass = $data['senha'];
-        $role_id = 1;
-
-        if(empty($role_id)) {
+        
+        if(isset($data['role'])) {
+            $role_id = $data['role'];
+        }else{
             $role_id = 1;
         }
 
@@ -58,6 +59,17 @@ class Usuario {
         $query = "UPDATE " . $this->table_name . " SET email = ?, senha = ?, nome = ? WHERE id_usuario = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("sssi", $data['email'], $user_pass_hash, $data['nome'], $data['id_usuario']);
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function update_user_adm($data) {
+        $query = "UPDATE " . $this->table_name . " SET nome = ?, role_id = ? WHERE id_usuario = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("sii", $data['nome'], $data['role_id'], $data['id_usuario']);
         if ($stmt->execute()) {
             return true;
         } else {

@@ -1,6 +1,11 @@
 //Modelo de import
 //<div id="header" data-img-path="../images/logo-ufv.png" data-img-alt="Logo UFV" data-first-link="https://www.youtube.com/" data-first-text="Sair" data-second-link="#" data-second-text="Phelipe Romano"></div>
 
+function capitalize(str) {
+    return str.replace(/\b\w/g, char => char.toUpperCase());
+}
+
+
 fetch('../../components/header.html').
     then(res => res.text())
     .then(data => {
@@ -31,7 +36,7 @@ fetch('../../components/header.html').
             firstNav.href = firstLink;
 
             const secondNav = header.getElementById('secondNav');
-            secondNav.innerText = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+            secondNav.innerText = capitalize(name);
             secondNav.href = secondLink;
 
 

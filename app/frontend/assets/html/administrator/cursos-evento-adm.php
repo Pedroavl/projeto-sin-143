@@ -1,3 +1,9 @@
+<?php
+if (isset($_GET['id_evento'])) {
+    $id_evento = $_GET['id_evento'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -20,17 +26,19 @@
             <h1 class="mt-3 p-1 fw-bold">Dashboard</h1>
             <div class="mt-3 p-1">
                 <div class="d-flex justify-content-between">
-                    <h3>Eventos</h3>
-                    <button class="btn p-2 text-light f2-light back-success" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><p class="m-0 p-1" style="font-size: small;">ADICIONAR EVENTO</p></button>
+                    <h3>Cursos do Evento</h3>
+                    <button class="btn p-2 text-light f2-light back-success" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><p class="m-0 p-1" style="font-size: small;">ADICIONAR CURSO</p></button>
                 </div>
 
                 <table class="table mt-4">
                     <thead>
                         <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Nome do Evento</th>
-                            <th scope="col">Data Início</th>
-                            <th scope="col">Data Fim</th>
+                            <th scope="col">ID Curso</th>
+                            <th scope="col">Data</th>
+                            <th scope="col">Início</th>
+                            <th scope="col">Fim</th>
+                            <th scope="col">Vagas</th>
+                            <th scope="col">Inscritos</th>
                             <th scope="col">Ações</th>
                         </tr>
                     </thead>
@@ -54,81 +62,78 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="../../php/create-evento.php" method="POST" enctype="multipart/form-data">
-            
+                <form action="../../php/create-cursos-evento.php" method="POST" enctype="multipart/form-data">
                     <div>
-                        <div class="form-floating">
-                            <div class="custom-file mb-3 d-flex align-items-start">
-                                <input type="file" name="imagem_evento" class="custom-file-input" accept="image/*" id="inputGroupFile01">
-                            </div>
+                        <input type="hidden" name="id_evento" value="<?php echo $id_evento ?>">
+                        <div class="mb-3">
+                            <label class="form-label">Curso</label>
+                            <select name="id_curso" class="form-control" required id="cursos">
+                                <option value="" disabled selected>Selecione um curso</option>
+                            </select>
                         </div>
-                        <div class="form-floating">
-                            <input type="text" name="title" class="form-control back-input rounded mb-2" placeholder="Título">
-                            <label for="title" class="text-input">Título</label>
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Data</label>
+                            <input type="date" name="date" class="form-control" required>
                         </div>
-                        <div class="form-floating">
-                            <input type="date" name="beginData" class="form-control back-input rounded mb-2" placeholder="Data de Início">
-                            <label for="beginData" class="text-input">Data de Início</label>
+                        <div class="mb-3">
+                            <label for="startTime" class="form-label">Início</label>
+                            <input type="time" name="startTime" class="form-control" required>
                         </div>
-                        <div class="form-floating">
-                            <input type="date" name="endData" class="form-control back-input rounded mb-2" placeholder="Data de Fim">
-                            <label for="endData" class="text-input">Data de Fim</label>
+                        <div class="mb-3">
+                            <label for="endTime" class="form-label">Fim</label>
+                            <input type="time" name="endTime" class="form-control" required>
                         </div>
-                        <div class="form-floating">
-                            <input type="text" name="location" class="form-control back-input rounded mb-2" placeholder="Local do Evento">
-                            <label for="location" class="text-input">Local do Evento</label>
-                        </div>
-                        <div class="form-floating">
-                            <textarea type="text" name="description" class="form-control back-input rounded mb-2" placeholder="Descrição do Evento" style="max-height: 120px;"></textarea>
-                            <label for="description" class="text-input">Descrição do Evento</label>
+                        <div class="mb-3">
+                            <label for="vacancy" class="form-label">Vagas</label>
+                            <input type="number" name="vacancy" class="form-control" required>
                         </div>
                     </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                <button type="submit" name="cadastrar_evento" class="btn btn-primary">Enviar</button>
+                <button type="submit" name="cadastrar_curso_evento" class="btn btn-primary">Enviar</button>
             </div>
                 </form>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
+<div class="modal fade" id="editCursosEventoModal" tabindex="-1" aria-labelledby="editCursosEventoModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editEventModalLabel">Editar Evento</h5>
+                <h5 class="modal-title" id="editCursosEventoModalLabel">Editar Curso</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form action="../../php/edit-evento.php" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="id_evento" id="editEventId">
+                    <input type="hidden" name="id_evento" id="editCursosEventoId">
                     <div class="custom-file mb-3 d-flex align-items-start">
                         <input type="file" class="custom-file-input" accept="image/*" name="imagem_evento">
                     </div>
                     <div class="form-floating">
-                        <input type="text" class="form-control back-input rounded mb-2" id="editEventName" name="title" placeholder="Título" required>
+                        <input type="text" class="form-control back-input rounded mb-2" id="editCursosEventoName" name="title" placeholder="Título" required>
                         <label for="title">Título</label>
                     </div>
                     <div class="form-floating">
-                        <input type="date" class="form-control back-input rounded mb-2" id="editEventBeginDate" name="beginData" placeholder="Data de Início" required>
+                        <input type="date" class="form-control back-input rounded mb-2" id="editCursosEventoBeginDate" name="beginData" placeholder="Data de Início" required>
                         <label for="beginData">Data de Início</label>
                     </div>
                     <div class="form-floating">
-                        <input type="date" class="form-control back-input rounded mb-2" id="editEventEndDate" name="endData" placeholder="Data de Fim" required>
+                        <input type="date" class="form-control back-input rounded mb-2" id="editCursosEventoEndDate" name="endData" placeholder="Data de Fim" required>
                         <label for="endData">Data de Fim</label>
                     </div>
                     <div class="form-floating">
-                        <input type="text" class="form-control back-input rounded mb-2" id="editEventLocation" name="location" placeholder="Local do Evento" required>
+                        <input type="text" class="form-control back-input rounded mb-2" id="editCursosEventoLocation" name="location" placeholder="Local do Evento" required>
                         <label for="location">Local do Evento</label>
                     </div>
                     <div class="form-floating">
-                        <textarea class="form-control back-input rounded mb-2" id="editEventDescription" name="description" placeholder="Descrição do Evento" required></textarea>
+                        <textarea class="form-control back-input rounded mb-2" id="editCursosEventoDescription" name="description" placeholder="Descrição do Evento" required></textarea>
                         <label for="description">Descrição do Evento</label>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button type="submit"  name="editar_evento"  class="btn btn-primary">Salvar Alterações</button>
+                        <button type="submit"  name="cadastrar_curso"  class="btn btn-primary">Salvar Alterações</button>
                     </div>
                 </form>
             </div>
@@ -136,7 +141,8 @@
     </div>
 </div>
 
-<script src="../../js/import-events-table.js"></script>
+<script src="../../js/import-cursos-evento-table.js"></script>
+<script src="../../js/cursos-options.js"></script>
 <script src="../../js/import-header-adm.js"></script>
 <script src="../../js/import-sidebar.js"></script>
 <script src="../../js/verify-adm.js"></script>

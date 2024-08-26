@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
-    fetch('../php/is-student-logged.php')
+    fetch('../../php/is-adm-logged.php')
         .then(response => response.text())
-        .then(data => {          
+        .then(data => {   
             if (data.includes("window.location.href")) {
                 document.write(data);
             } else {

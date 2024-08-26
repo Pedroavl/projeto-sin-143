@@ -1,95 +1,84 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const containerEventos = document.getElementById('tbody');
+    const containerCursos = document.getElementById('tbody');
     const paginationContainer = document.getElementById('pagination-links');
     const itemsPerPage = 8;
     let currentPage = 1;
     let totalPages;
 
-    fetch('../../php/eventos.php')
+    fetch('../../php/cursos.php')
         .then(res => res.json())
         .then(data => {
-            const eventos = data;
+            const cursos = data;
             
-            totalPages = Math.ceil(eventos.length / itemsPerPage);
+            totalPages = Math.ceil(cursos.length / itemsPerPage);
 
             function renderPage(page) {
-                containerEventos.innerHTML = '';
+                containerCursos.innerHTML = '';
                 const start = (page - 1) * itemsPerPage;
                 const end = start + itemsPerPage;
-                const pageItems = eventos.slice(start, end);
+                const pageItems = cursos.slice(start, end);
 
-                pageItems.forEach(evento => {
-                    const trEvento = document.createElement('tr');
+                pageItems.forEach(curso => {
+                    const trCourse = document.createElement('tr');
 
                     const tdId = document.createElement('td');
-                    const tdNameEvent = document.createElement('td');
-                    const tdBeginDate = document.createElement('td');
-                    const tdEndDate = document.createElement('td');
+                    const tdNameCourse = document.createElement('td');
+                    const tdCreationDate = document.createElement('td');
+                    const tdDescription = document.createElement('td');
                     const tdActions = document.createElement('td');
 
-                    tdId.textContent = evento['id_evento'];
-                    tdNameEvent.textContent = evento['nome'];
-                    tdBeginDate.textContent = evento['data_inicio'];
-                    tdEndDate.textContent = evento['data_fim'];
-
-                    const courses = document.createElement('a');
-                    courses.textContent = 'Cursos';
-                    courses.className = 'text-deco-none cursor-pointer';
-                    courses.style.marginRight = '20px';
-                    courses.addEventListener('click', () => {
-                        window.location.href = `cursos-evento-adm.php?id_evento=${evento['id_evento']}`;
-                    });
+                    tdId.textContent = curso['idCurso'];
+                    tdNameCourse.textContent = curso['titulo'];
+                    tdCreationDate.textContent = curso['data_criacao'];
+                    tdDescription.textContent = curso['descricao'];
 
                     const editLink = document.createElement('a');
                     editLink.textContent = 'Editar';
                     editLink.className = 'text-deco-none cursor-pointer';
                     editLink.style.marginRight = '20px';
                     editLink.addEventListener('click', () => {
-                        document.getElementById('editEventId').value = evento['id_evento'];
-                        document.getElementById('editEventName').value = evento['nome'];
-                        document.getElementById('editEventDescription').value = evento['descricao'];
-                        document.getElementById('editEventBeginDate').value = evento['data_inicio'];
-                        document.getElementById('editEventEndDate').value = evento['data_fim'];
-                        document.getElementById('editEventLocation').value = evento['local'];
+                        document.getElementById('editCursoId').value = curso['idCurso'];
+                        document.getElementById('editCursoName').value = curso['titulo'];
+                        document.getElementById('editCursoDescription').value = curso['descricao'];
 
-                        const editEventModal = new bootstrap.Modal(document.getElementById('editEventModal'));
-                        editEventModal.show();
+                        const editCourseModal = new bootstrap.Modal(document.getElementById('editCursoModal'));
+                        editCourseModal.show();
                     });
 
                     const deleteLink = document.createElement('a');
                     deleteLink.textContent = 'Excluir';
                     deleteLink.className = 'text-deco-none cursor-pointer text-danger';
                     deleteLink.addEventListener('click', () => {
-                        fetch('../../php/delete-evento.php', {
+                        fetch('../../php/delete-curso.php', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/x-www-form-urlencoded',
                             },
-                            body: `deletar_evento=true&id_evento=${evento['id_evento']}`
+                            body: `deletar_curso=true&id_curso=${curso['idCurso']}`
                         })
                         .then(response => response.text())
                         .then(data => {
-                            alert('Evento excluído com sucesso!');
+                            alert('curso excluído com sucesso!');
+                            console.log(data);
 
-                            trEvento.remove();
+                            trCourse.remove();
                             updatePagination();
                         })
                         .catch(error => {
-                            alert('Erro ao excluir o evento.');
+                            alert('Erro ao excluir o curso.');
                         });
                     });
 
-                    tdActions.appendChild(courses);
                     tdActions.appendChild(editLink);
                     tdActions.appendChild(deleteLink);
 
-                    trEvento.appendChild(tdId);
-                    trEvento.appendChild(tdNameEvent);
-                    trEvento.appendChild(tdBeginDate);
-                    trEvento.appendChild(tdEndDate);
-                    trEvento.appendChild(tdActions);
+                    trCourse.appendChild(tdId);
+                    trCourse.appendChild(tdNameCourse);
+                    trCourse.appendChild(tdDescription);
+                    trCourse.appendChild(tdCreationDate);
+                    trCourse.appendChild(tdActions);
 
-                    containerEventos.appendChild(trEvento);
+                    containerCursos.appendChild(trCourse);
                 });
             }
 
@@ -129,5 +118,5 @@ document.addEventListener('DOMContentLoaded', () => {
             renderPage(currentPage);
             setupPagination();
         })
-        .catch(error => console.error('Erro ao carregar os eventos:', error));
+        .catch(error => console.error('Erro ao carregar os cursos:', error));
 });

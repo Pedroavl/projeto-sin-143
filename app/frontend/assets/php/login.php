@@ -37,7 +37,7 @@
             // Se email
         }else if($user->read_user_by_email($_POST['emailMat'])){
             // Consulta senha
-            $query = "SELECT senha, id_usuario FROM usuario WHERE email = ?";
+            $query = "SELECT senha, id_usuario, role_id, nome FROM usuario WHERE email = ?";
             $stmt = $conn->prepare($query);
             $stmt->bind_param("s", $_POST['emailMat']);
             $stmt->execute();
@@ -50,10 +50,17 @@
                 $_SESSION['id_usuario'] = $data['id_usuario'];
                 $_SESSION['email'] = $_POST['emailMat'];
                 $_SESSION['nome'] = $data['nome'];
+                $_SESSION['role_id'] = $data['role_id'];
                 echo $_SESSION['email'];
                 echo $_SESSION['id_usuario'];
                 echo $_SESSION['nome'];
-                header('Location: ../html/main-page.html');
+                echo $_SESSION['role_id'];
+
+                if($data['role_id'] == 0){
+                    header('Location: ../html/administrator/main-page-adm.html');
+                }else{
+                    header('Location: ../html/main-page.html');
+                }
             }else {
                 print_r('Dados Invalidos');
             }

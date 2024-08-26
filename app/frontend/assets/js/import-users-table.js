@@ -1,95 +1,102 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const containerEventos = document.getElementById('tbody');
+    const containerUsers = document.getElementById('tbody');
     const paginationContainer = document.getElementById('pagination-links');
     const itemsPerPage = 8;
     let currentPage = 1;
     let totalPages;
 
-    fetch('../../php/eventos.php')
+    fetch('../../php/users.php')
         .then(res => res.json())
         .then(data => {
-            const eventos = data;
+            const users = data;
             
-            totalPages = Math.ceil(eventos.length / itemsPerPage);
+            totalPages = Math.ceil(users.length / itemsPerPage);
 
             function renderPage(page) {
-                containerEventos.innerHTML = '';
+                containerUsers.innerHTML = '';
                 const start = (page - 1) * itemsPerPage;
                 const end = start + itemsPerPage;
-                const pageItems = eventos.slice(start, end);
+                const pageItems = users.slice(start, end);
 
-                pageItems.forEach(evento => {
-                    const trEvento = document.createElement('tr');
+                pageItems.forEach(user => {
+                    const trUser = document.createElement('tr');
 
                     const tdId = document.createElement('td');
-                    const tdNameEvent = document.createElement('td');
-                    const tdBeginDate = document.createElement('td');
-                    const tdEndDate = document.createElement('td');
+                    const tdNameUser = document.createElement('td');
+                    const tdUserRole = document.createElement('td');
                     const tdActions = document.createElement('td');
 
-                    tdId.textContent = evento['id_evento'];
-                    tdNameEvent.textContent = evento['nome'];
-                    tdBeginDate.textContent = evento['data_inicio'];
-                    tdEndDate.textContent = evento['data_fim'];
+                    tdId.textContent = user['id_usuario'];
+                    tdNameUser.textContent = user['nome'];
 
-                    const courses = document.createElement('a');
-                    courses.textContent = 'Cursos';
-                    courses.className = 'text-deco-none cursor-pointer';
-                    courses.style.marginRight = '20px';
-                    courses.addEventListener('click', () => {
-                        window.location.href = `cursos-evento-adm.php?id_evento=${evento['id_evento']}`;
-                    });
+                    if(user['role_id'] == 0){
+                        tdUserRole.textContent = "Administrador";
+                    }else if(user['role_id'] == 1){
+                        tdUserRole.textContent = "Usuário";
+                    }
 
                     const editLink = document.createElement('a');
                     editLink.textContent = 'Editar';
                     editLink.className = 'text-deco-none cursor-pointer';
                     editLink.style.marginRight = '20px';
                     editLink.addEventListener('click', () => {
-                        document.getElementById('editEventId').value = evento['id_evento'];
-                        document.getElementById('editEventName').value = evento['nome'];
-                        document.getElementById('editEventDescription').value = evento['descricao'];
-                        document.getElementById('editEventBeginDate').value = evento['data_inicio'];
-                        document.getElementById('editEventEndDate').value = evento['data_fim'];
-                        document.getElementById('editEventLocation').value = evento['local'];
+                        document.getElementById('userId').value = user['id_usuario'];
+                        document.getElementById('userOldRole').value = user['role_id'];
+                        document.getElementById('editUserName').value = user['nome'];
+                        document.getElementById('editUserRole').value = user['role_id'];
 
-                        const editEventModal = new bootstrap.Modal(document.getElementById('editEventModal'));
-                        editEventModal.show();
+                        if(user['role_id'] == 1){
+                            fetch('../../php/get-matricula.php', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                },
+                                body: `id_usuario=${user['id_usuario']}`
+                            })
+                            .then(res => res.json())
+                            .then(data => {
+                                document.getElementById('editMatricula').value = data['matricula'];
+                            }) 
+                        } else {
+                            document.getElementById('editMatricula').value = '';
+                        }
+
+                        const editUserModal = new bootstrap.Modal(document.getElementById('editUserModal'));
+                        editUserModal.show();
                     });
 
                     const deleteLink = document.createElement('a');
                     deleteLink.textContent = 'Excluir';
                     deleteLink.className = 'text-deco-none cursor-pointer text-danger';
                     deleteLink.addEventListener('click', () => {
-                        fetch('../../php/delete-evento.php', {
+                        fetch('../../php/delete-user.php', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/x-www-form-urlencoded',
                             },
-                            body: `deletar_evento=true&id_evento=${evento['id_evento']}`
+                            body: `delete_user=true&role=${user['role_id']}&id_usuario=${user['id_usuario']}`
                         })
                         .then(response => response.text())
                         .then(data => {
-                            alert('Evento excluído com sucesso!');
+                            alert('Usuario excluído com sucesso!');
 
-                            trEvento.remove();
+                            trUser.remove();
                             updatePagination();
                         })
                         .catch(error => {
-                            alert('Erro ao excluir o evento.');
+                            alert('Erro ao excluir o Usuario.');
                         });
                     });
 
-                    tdActions.appendChild(courses);
                     tdActions.appendChild(editLink);
                     tdActions.appendChild(deleteLink);
 
-                    trEvento.appendChild(tdId);
-                    trEvento.appendChild(tdNameEvent);
-                    trEvento.appendChild(tdBeginDate);
-                    trEvento.appendChild(tdEndDate);
-                    trEvento.appendChild(tdActions);
+                    trUser.appendChild(tdId);
+                    trUser.appendChild(tdNameUser);
+                    trUser.appendChild(tdUserRole);
+                    trUser.appendChild(tdActions);
 
-                    containerEventos.appendChild(trEvento);
+                    containerUsers.appendChild(trUser);
                 });
             }
 
@@ -129,5 +136,5 @@ document.addEventListener('DOMContentLoaded', () => {
             renderPage(currentPage);
             setupPagination();
         })
-        .catch(error => console.error('Erro ao carregar os eventos:', error));
+        .catch(error => console.error('Erro ao carregar os usuários:', error));
 });

@@ -72,6 +72,31 @@ class Administrador {
         }
     }
 
+    public function delete_administrador_by_user_id($id_usuario) {
+        $query = "DELETE " . $this->table_name . " FROM " . $this->table_name . " JOIN Usuario AS U ON U.id_usuario = " . $this->table_name . ".id_usuario WHERE U.id_usuario = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $id_usuario);
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function get_administrador_by_user($id_usuario) {
+        $query = "SELECT id_administrador FROM " . $this->table_name . " JOIN Usuario AS U ON U.id_usuario = " . $this->table_name . ".id_usuario WHERE U.id_usuario = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $id_usuario);
+        $stmt->execute();
+        $res = $stmt->get_result();
+
+        if ($res->num_rows > 0) {
+            return $res->fetch_assoc();
+        } else {
+            return null;
+        }
+    }
+
     // Executa uma query para verificar se o id_usuario já existe antes de inserir
     private function id_usuario_existe($id_usuario) {
         $query = "SELECT id_usuario FROM Usuario WHERE id_usuario = ?";
