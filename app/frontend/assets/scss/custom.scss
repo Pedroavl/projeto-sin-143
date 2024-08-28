@@ -77,6 +77,11 @@ $theme-colors: (
     color: white;
 }
 
+#divEvento {
+    background-blend-mode: color;
+    background-color: #00000094;
+}
+
 h1, .h1 {
     font-size: calc(1.475rem + 1.5vw);
     font-family:'Roboto';

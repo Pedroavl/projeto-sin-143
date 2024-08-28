@@ -13,7 +13,7 @@
         // Se matricula
         if($student->estudante_existe($_POST['emailMat'])){
             // Consulta senha
-            $query = "SELECT U.senha, U.id_usuario, U.email, U.nome FROM usuario as U JOIN estudante as E ON E.id_usuario = U.id_usuario WHERE E.matricula = ?";
+            $query = "SELECT U.senha, U.id_usuario, U.email, U.nome FROM Usuario as U JOIN Estudante as E ON E.id_usuario = U.id_usuario WHERE E.matricula = ?";
             $stmt = $conn->prepare($query);
             $stmt->bind_param("i", $_POST['emailMat']);
             $stmt->execute();
@@ -29,7 +29,12 @@
                 echo $_SESSION['email'];
                 echo $_SESSION['id_usuario'];
                 echo $_SESSION['nome'];
-                header('Location: ../html/main-page.html');
+                
+                if($user->is_administrador($data['id_usuario'])){
+                    header('Location: ../html/administrator/main-page-adm.html');
+                }elseif($user->is_estudante($data['id_usuario']) && !$user->is_administrador($data['id_usuario'])) {
+                    header('Location: ../html/main-page.html');
+                }
             }else {
                 print_r('Dados Invalidos');
             }
@@ -37,7 +42,7 @@
             // Se email
         }else if($user->read_user_by_email($_POST['emailMat'])){
             // Consulta senha
-            $query = "SELECT senha, id_usuario, role_id, nome FROM usuario WHERE email = ?";
+            $query = "SELECT senha, id_usuario, role_id, nome FROM Usuario WHERE email = ?";
             $stmt = $conn->prepare($query);
             $stmt->bind_param("s", $_POST['emailMat']);
             $stmt->execute();
@@ -56,9 +61,9 @@
                 echo $_SESSION['nome'];
                 echo $_SESSION['role_id'];
 
-                if($data['role_id'] == 0){
+                if($user->is_administrador($data['id_usuario'])){
                     header('Location: ../html/administrator/main-page-adm.html');
-                }else{
+                }elseif($user->is_estudante($data['id_usuario']) && !$user->is_administrador($data['id_usuario'])) {
                     header('Location: ../html/main-page.html');
                 }
             }else {
