@@ -12,6 +12,14 @@ class Curso {
         $this->conn = $db;
     }
 
+    public function read_curso($idCurso) {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE idCurso = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $idCurso);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
+
     public function read_cursos() {
         $query = "SELECT * FROM " . $this->table_name;
         $stmt = $this->conn->prepare($query);

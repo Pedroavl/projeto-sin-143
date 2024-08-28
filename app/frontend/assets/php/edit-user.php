@@ -8,7 +8,7 @@
 
         $user = new Usuario($conn);
         $user->update_user_adm($_POST);
-
+        
         if($_POST['old_role'] != $_POST['role_id']){
             $estudante = new Estudante($conn);
             $adm = new Administrador($conn);

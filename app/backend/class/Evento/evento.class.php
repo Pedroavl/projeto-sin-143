@@ -12,6 +12,15 @@ class Evento {
         $this->conn = $db;
     }
 
+    public function read_evento($id_evento) {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE id_evento = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param('i', $id_evento);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
+
+
     public function read_eventos() {
         $query = "SELECT * FROM " . $this->table_name;
         $stmt = $this->conn->prepare($query);

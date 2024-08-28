@@ -51,9 +51,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     editLink.className = 'text-deco-none cursor-pointer';
                     editLink.style.marginRight = '20px';
                     editLink.addEventListener('click', () => {
-                        /*document.getElementById('editCursoId').value = curso['id_curso'];
-                        document.getElementById('editCursoName').value = curso['titulo'];
-                        document.getElementById('editCursoDescription').value = curso['descricao'];*/
+                        document.getElementById('cursoId').value = curso['id_curso'];
+                        document.getElementById('eventoId').value = idEvento;
+                        document.getElementById('editData').value = curso['data'];
+                        document.getElementById('editHoraInicio').value = curso['horario_inicio'];
+                        document.getElementById('editHoraFim').value = curso['horario_fim'];
+                        document.getElementById('editVagas').value = curso['quantidade_vagas'];
 
                         const editCourseModal = new bootstrap.Modal(document.getElementById('editCursosEventoModal'));
                         editCourseModal.show();

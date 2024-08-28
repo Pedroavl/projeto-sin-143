@@ -62,7 +62,7 @@ if (isset($_GET['id_evento'])) {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="../../php/create-cursos-evento.php" method="POST" enctype="multipart/form-data">
+                <form action="../../php/create-cursos-evento.php" method="POST">
                     <div>
                         <input type="hidden" name="id_evento" value="<?php echo $id_evento ?>">
                         <div class="mb-3">
@@ -106,34 +106,28 @@ if (isset($_GET['id_evento'])) {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="../../php/edit-evento.php" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="id_evento" id="editCursosEventoId">
-                    <div class="custom-file mb-3 d-flex align-items-start">
-                        <input type="file" class="custom-file-input" accept="image/*" name="imagem_evento">
-                    </div>
-                    <div class="form-floating">
-                        <input type="text" class="form-control back-input rounded mb-2" id="editCursosEventoName" name="title" placeholder="Título" required>
-                        <label for="title">Título</label>
-                    </div>
-                    <div class="form-floating">
-                        <input type="date" class="form-control back-input rounded mb-2" id="editCursosEventoBeginDate" name="beginData" placeholder="Data de Início" required>
-                        <label for="beginData">Data de Início</label>
-                    </div>
-                    <div class="form-floating">
-                        <input type="date" class="form-control back-input rounded mb-2" id="editCursosEventoEndDate" name="endData" placeholder="Data de Fim" required>
-                        <label for="endData">Data de Fim</label>
-                    </div>
-                    <div class="form-floating">
-                        <input type="text" class="form-control back-input rounded mb-2" id="editCursosEventoLocation" name="location" placeholder="Local do Evento" required>
-                        <label for="location">Local do Evento</label>
-                    </div>
-                    <div class="form-floating">
-                        <textarea class="form-control back-input rounded mb-2" id="editCursosEventoDescription" name="description" placeholder="Descrição do Evento" required></textarea>
-                        <label for="description">Descrição do Evento</label>
-                    </div>
+                <form action="../../php/edit-cursos-evento.php" method="POST">
+                    <input type="hidden" name="id_evento" value="<?php echo $id_evento ?>" id="eventoId">
+                    <input type="hidden" name="id_curso" id="cursoId">
+                    <div class="mb-3">
+                            <label for="date" class="form-label">Data</label>
+                            <input type="date" name="date" id="editData" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="startTime" class="form-label">Início</label>
+                            <input type="time" name="startTime" id="editHoraInicio" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="endTime" class="form-label">Fim</label>
+                            <input type="time" name="endTime" id="editHoraFim" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="vacancy" class="form-label">Vagas</label>
+                            <input type="number" name="vacancy" id="editVagas" class="form-control" required>
+                        </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button type="submit"  name="cadastrar_curso"  class="btn btn-primary">Salvar Alterações</button>
+                        <button type="submit"  name="editar_cursos_evento"  class="btn btn-primary">Salvar Alterações</button>
                     </div>
                 </form>
             </div>

@@ -26,6 +26,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     divEvento.style.height = '250px';
                     divEvento.style.cursor = 'pointer';
 
+                    divEvento.addEventListener('click', () => {
+                        console.log(`events.php?id_evento=${evento['id_evento']}`);
+                        window.location.href = `events.php?id_evento=${evento['id_evento']}`;
+                    });
+
                     // Criar a imagem
                     const imgEvento = document.createElement('img');
                     imgEvento.src = evento['imagem'];

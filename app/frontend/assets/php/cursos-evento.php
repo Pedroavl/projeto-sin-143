@@ -8,5 +8,7 @@
     $data = $cursosEvento->read_cursos_evento($_POST['id_evento']);
 
     echo json_encode($data);
+
+    exit();
 ?>
 

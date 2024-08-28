@@ -38,10 +38,10 @@ class CursosEvento {
     }
 
     public function update_curso_evento($data) {
-        $query = "UPDATE " . $this->table_name . " SET quantidade_vagas = ?, quantidade_inscritos = ?, data = ?, horario_inicio = ?, horario_fim = ? WHERE id_evento = ? AND id_curso = ?";
+        $query = "UPDATE " . $this->table_name . " SET quantidade_vagas = ?, data = ?, horario_inicio = ?, horario_fim = ? WHERE id_evento = ? AND id_curso = ?";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("iisssii", $data['quantidade_vagas'], $data['quantidade_inscritos'], $data['data'], $data['horario_inicio'], $data['horario_fim'], $data['id_evento'], $data['id_curso']);
+        $stmt->bind_param("isssii", $data['quantidade_vagas'], $data['data'], $data['horario_inicio'], $data['horario_fim'], $data['id_evento'], $data['id_curso']);
 
         if ($stmt->execute()) {
             return true;
