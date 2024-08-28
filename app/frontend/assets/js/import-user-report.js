@@ -30,9 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     tdName.textContent = user['nome'];
 
                     if(user['role_id'] == 0){
-                        tdRole.textContent = "Estudante";
-                    } else {
                         tdRole.textContent = "Administrador";
+                    } else {
+                        tdRole.textContent = "Estudante";
                     }
 
                     trUsers.appendChild(tdId);
