@@ -6,6 +6,7 @@
 class EstudanteCursosEvento {
     private $conn;
     private $table_name = "Estudante_Cursos_Evento";
+
     private $CursosEventos;
 
     public function __construct($db) {
@@ -17,6 +18,11 @@ class EstudanteCursosEvento {
         // Verifica se o estudante já está inscrito em outro curso no mesmo horário
         if ($this->CursosEventos->is_horario_conflitante($data)) {
             return false;
+        }
+
+        // Vê se ainda tem vagas no curso
+        if (!$this->check_qtd_inscritos_and_vagas($data)) {
+            return "Erro 1"; // Erro 1 quer dizer que não há mais vagas
         }
 
         // Verifica se o estudante já está inscrito no mesmo curso e evento
@@ -33,6 +39,48 @@ class EstudanteCursosEvento {
             } else {
                 return false;
             }
+        }
+    }
+
+    // Método para contar os cursos inscritos do estudante
+    public function count_cursos_inscritos($matricula) {
+        $query = "SELECT COUNT(*) as total_cursos FROM " . $this->table_name . " WHERE matricula = ?";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $matricula);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        return $row['total_cursos'];
+    }
+    public function qtd_inscritos($data) {
+        $query = "SELECT quantidade_inscritos FROM Cursos_Evento WHERE id_evento = ? AND id_curso = ?";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("ii", $data['id_evento'], $data['id_curso']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        return $row['quantidade_inscritos'];
+    }
+
+
+    // Método para verificar se existe vaga em um curso
+    public function check_qtd_inscritos_and_vagas($data) {
+        $query = "SELECT quantidade_inscritos, quantidade_vagas FROM Cursos_Evento WHERE id_evento = ? AND id_curso = ?";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("ii", $data['id_evento'], $data['id_curso']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        if ($row['quantidade_inscritos'] < $row['quantidade_vagas']) {
+            return true;
+        } else {
+            return false;
         }
     }
 
