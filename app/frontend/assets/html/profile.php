@@ -1,14 +1,18 @@
-<?php  
+<?php
+    include "../../../backend/class/helpers/helper.class.php";
+
     session_start();
 
     $id_usuario = $_SESSION['id_usuario'];
     $nome = $_SESSION['nome'];
     $email = $_SESSION['email'];
 
+    // modo de depuração
+    $helper = new Helper(false);
 
     include "../../../backend/database/connection/connect.inc.php";
     include "../../../backend/class/Estudante/estudante.class.php";
-    include "../../../backend/class/EstudanteCursosEvento/estudantecursoseventos.class.php";
+    include "../../../backend/class/EstudanteCursosEvento/estudantecuroseventos.class.php";
     include "../../../backend/class/CursosEvento/cursoseventos.class.php";
 
     $estudante = new Estudante($conn);
@@ -18,10 +22,12 @@
     $dataEstudante = $estudante->get_student_by_user($id_usuario);
     $ranking = $estudante->ranking_estudantes($dataEstudante['matricula'])['classificacao'];
 
+    $pontuacao = $estudante->ranking_estudantes($dataEstudante['matricula'])['pontuacao'];
+
     $numCursos = $estudanteCursosEvento->count_cursos_inscritos($dataEstudante['matricula']);
 
     $data = [
-        'pontuacao' => $dataEstudante['pontuacao'],
+        'pontuacao' => $pontuacao,
         'ranking' => $ranking,
         'numCursos' => $numCursos
     ];
