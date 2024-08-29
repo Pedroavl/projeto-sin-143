@@ -29,6 +29,18 @@ fetch('../../components/header.html').
             const parser = new DOMParser();
             const header = parser.parseFromString(data, 'text/html');
 
+            const myCourses = header.createElement('li');
+            const myCoursesContent = header.createElement('a');
+            const links = header.getElementById('links');
+
+            myCourses.className = "nav-item";
+
+            myCoursesContent.className = "nav-link border rounded-3 text-primary mx-3";
+            myCoursesContent.href = "student-courses.html";
+            myCoursesContent.textContent = "Meus Cursos";
+
+            myCourses.appendChild(myCoursesContent);
+            links.insertBefore(myCourses, links.firstChild);
             
             const image = header.getElementById('logo-ufv');
             image.src = imgPath;

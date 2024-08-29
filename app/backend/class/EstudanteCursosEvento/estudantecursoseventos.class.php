@@ -108,6 +108,18 @@ class EstudanteCursosEvento {
         return $stmt->num_rows > 0;
     }
 
+    public function read_estudante_inscriptions($matricula) {
+        $query = "SELECT * FROM Estudante_Cursos_Evento WHERE matricula = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $matricula);
+
+        if ($stmt->execute()) {
+            return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        } else {
+            return false;
+        }
+    }
+
     public function read_estudante_eventos($matricula) {
         $query = "SELECT * FROM vw_eventos_incritos_usuario WHERE matricula = ?";
         $stmt = $this->conn->prepare($query);
@@ -123,7 +135,7 @@ class EstudanteCursosEvento {
     public function read_estudante_cursos($matricula) {
         $query = "SELECT * FROM vw_cursos_incritos_usuario WHERE matricula = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("i", $matricula);
+        $stmt->bind_param("s", $matricula);
         if ($stmt->execute()) {
             return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         } else {
