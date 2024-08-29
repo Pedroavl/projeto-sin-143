@@ -31,7 +31,7 @@
 <body class="bg-light">
 
 <div class="justify-content-center align-items-center">
-    <div id="header" data-img-path="../images/logo-ufv.png" data-img-alt="Logo UFV" data-first-link="../php/end-session.php" data-first-text="Sair" data-second-link="#"></div>
+    <div id="header" data-img-path="../images/logo-ufv.png" data-img-alt="Logo UFV" data-first-link="../php/end-session.php" data-first-text="Sair" data-second-link="profile.php"></div>
         <div class="row m-0 justify-content-center">
             <div id="divEvento" class="d-flex justify-content-center align-content-around text-center row p-5 img-fluid max-width" style="height: 90vh; background-image: url('<?php echo $caminhoImagem ?>'); background-size: cover;">
                 <h2 class="fw-bold m-0 text-primary">Você escolheu o Evento:</h2>

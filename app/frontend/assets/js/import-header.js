@@ -24,12 +24,20 @@ fetch('../../components/header.html').
 
             const secondLink  = component.getAttribute('data-second-link');
 
+            const linkHome = component.getAttribute('data-link-logo');
+
             const parser = new DOMParser();
             const header = parser.parseFromString(data, 'text/html');
 
+            
             const image = header.getElementById('logo-ufv');
             image.src = imgPath;
             image.alt = imgAlt;
+
+            console.log(linkHome);
+
+            const linkLogo = header.getElementById('linkLogo');
+            linkLogo.href = linkHome;
 
             const firstNav = header.getElementById('firstNav');
             firstNav.innerText = firstText;

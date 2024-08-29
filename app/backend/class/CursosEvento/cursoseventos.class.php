@@ -12,6 +12,17 @@ class CursosEvento {
         $this->conn = $db;
     }
 
+    public function read_curso_evento($id_evento, $id_curso) {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE id_evento = ? AND id_curso = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("ii", $id_evento, $id_curso);
+        if ($stmt->execute()) {
+            return $stmt->get_result()->fetch_assoc();
+        } else {
+            return false;
+        }
+    }
+
     public function read_cursos_evento($id_evento) {
         $query = "SELECT * FROM " . $this->table_name . " WHERE id_evento = ?";
         $stmt = $this->conn->prepare($query);
@@ -64,10 +75,10 @@ class CursosEvento {
     }
 
     public function is_horario_conflitante($data) {
-        $query = "SELECT COUNT(*) as total FROM " . $this->table_name . " WHERE id_evento = ? AND data = ? AND ((horario_inicio < ? AND horario_fim > ?) OR (horario_inicio < ? AND horario_fim > ?) OR (horario_inicio = ? AND horario_fim = ?))";
+        $query = "SELECT COUNT(*) as total FROM " . $this->table_name . " as ce JOIN estudante_cursos_evento as ece ON ce.id_evento = ece.id_evento AND ce.id_curso = ece.id_curso WHERE ce.id_evento = ? AND ce.data = ? AND ece.matricula = ? AND ((ce.horario_inicio < ? AND ce.horario_fim > ?) OR (ce.horario_inicio < ? AND ce.horario_fim > ?) OR (ce.horario_inicio = ? AND ce.horario_fim = ?))";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("isssssss", $data['id_evento'], $data['data'], $data['horario_fim'], $data['horario_inicio'], $data['horario_fim'], $data['horario_inicio'], $data['horario_inicio'], $data['horario_fim']);
+        $stmt->bind_param("isissssss", $data['id_evento'], $data['data'], $data['matricula'], $data['horario_fim'], $data['horario_inicio'], $data['horario_fim'], $data['horario_inicio'], $data['horario_inicio'], $data['horario_fim']);
 
         $stmt->execute();
         $result = $stmt->get_result();

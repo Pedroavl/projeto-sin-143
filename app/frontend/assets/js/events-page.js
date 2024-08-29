@@ -66,6 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     button.style.width = '60%';
                     button.style.transform = 'translateX(-50%)';
 
+                    button.addEventListener('click', () => {
+                        window.location.href = `inscribe.php?id_evento=${idEvento}&id_curso=${curso['id_curso']}`;
+                    });
+
                     divCurso.appendChild(hNomeCurso);
                     divCurso.appendChild(pDescricao);
                     divCurso.appendChild(pData);

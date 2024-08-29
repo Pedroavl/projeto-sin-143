@@ -81,7 +81,7 @@ class Estudante {
     }
 
     public function get_student_by_user($id_usuario) {
-        $query = "SELECT matricula FROM " . $this->table_name . " JOIN Usuario AS U ON U.id_usuario = " . $this->table_name . ".id_usuario WHERE U.id_usuario = ?";
+        $query = "SELECT matricula, pontuacao FROM " . $this->table_name . " JOIN Usuario AS U ON U.id_usuario = " . $this->table_name . ".id_usuario WHERE U.id_usuario = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("i", $id_usuario);
         $stmt->execute();

@@ -39,12 +39,24 @@ $theme-colors: (
     background-color: $gray !important;
 }
 
+.back-light {
+    background-color: $light !important;
+}
+
 .text-primary {
     color: $light !important;
 }
 
+.text-red {
+    color: $primary !important;
+}
+
 .text-input {
     color: $inputText !important;
+}
+
+.border-red {
+    border: 1px solid $primary !important;
 }
 
 .w-40 {
