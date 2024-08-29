@@ -12,7 +12,7 @@
 
     include "../../../backend/database/connection/connect.inc.php";
     include "../../../backend/class/Estudante/estudante.class.php";
-    include "../../../backend/class/EstudanteCursosEvento/estudantecuroseventos.class.php";
+    include "../../../backend/class/EstudanteCursosEvento/estudantecursoseventos.class.php";
     include "../../../backend/class/CursosEvento/cursoseventos.class.php";
 
     $estudante = new Estudante($conn);
